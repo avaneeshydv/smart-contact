@@ -1,4 +1,7 @@
-com/smart/contact/controller/ApplicationController.class
+com/smart/contact/dao/UserRepository.class
+com/smart/contact/service/UserServiceImpl.class
+com/smart/contact/service/UserService.class
 com/smart/contact/SmartContactApplication.class
 com/smart/contact/entity/User.class
+com/smart/contact/controller/ApplicationController.class
 com/smart/contact/entity/Contact.class
