@@ -1,1 +1,4 @@
+com/smart/contact/controller/ApplicationController.class
 com/smart/contact/SmartContactApplication.class
+com/smart/contact/entity/User.class
+com/smart/contact/entity/Contact.class
