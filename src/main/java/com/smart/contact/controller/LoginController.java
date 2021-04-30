@@ -6,7 +6,6 @@ import com.smart.contact.config.ApplicationConstant;
 import com.smart.contact.entity.User;
 import com.smart.contact.service.UserService;
 import com.smart.contact.vo.LoginUser;
-import com.smart.contact.vo.SignUpUser;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

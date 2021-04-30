@@ -2,8 +2,6 @@ package com.smart.contact.service;
 
 import java.time.LocalDate;
 
-import javax.validation.Valid;
-
 import com.smart.contact.config.ApplicationConstant;
 import com.smart.contact.dao.UserRepository;
 import com.smart.contact.entity.User;
@@ -26,12 +24,12 @@ public class UserServiceImpl implements UserService {
     public User createUser(SignUpUser user) {
 
         log.info("Creating user with details {}", user);
-        
+
         User userToBeAdded = new User();
         userToBeAdded.setFirstName(user.getFirstName());
         userToBeAdded.setLastName(user.getLastName());
         userToBeAdded.setGender(user.getGender().charAt(0));
-        userToBeAdded.setEmail(user.getEmail());
+        userToBeAdded.setEmail(StringUtils.lowerCase(user.getEmail()));
         userToBeAdded.setPassword(user.getPassword());
 
         if (StringUtils.isNotBlank(user.getDateOfBirth())) {
