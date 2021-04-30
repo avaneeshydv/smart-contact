@@ -6,5 +6,7 @@ import com.smart.contact.vo.SignUpUser;
 public interface UserService {
 
     User createUser(SignUpUser user);
-    
+
+    User getUser(String email);
+
 }

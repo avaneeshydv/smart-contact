@@ -10,21 +10,20 @@
 <body>
     <section>
         <div class="container">
-            <div class="row mt-4">
-                <div class="col-md-6 offset-md-3">
-                    <h2 class="text-center">Please register yourself</h2>
-                    <form th:action="@{/process}" method="POST" class="p-4" th:object="${loginData}">
+            <div class="row mt-2">
+                <div class="col-md-8 offset-md-2  bg-white">
+                    <h2 class="text-center">Register Here!!</h2>
+                    <form th:action="@{/signup_do}" method="POST" class="p-4" th:object="${signupData}">
                         <div class="form-group row">
                             <label for="inputName" class="col-sm-2 col-form-label">Name</label>
-                            <div class="col-sm-5">
-                                <input type="text" name="firstName" class="form-control" placeholder="First Name" id="firstName" th:classappend="${#fields.hasErrors('firstName') ? 'is-invalid' : ''}" th:value="${loginData.firstName}">
+                            <div class="col-sm-10">
+                                <input type="text" name="firstName" class="form-control" placeholder="First Name" id="firstName" th:classappend="${#fields.hasErrors('firstName') ? 'is-invalid' : ''}" th:value="${signupData.firstName}">
 
                                 <div th:each="e : ${#fields.errors('firstName')}" th:text="${e}" id="feedbackError" class="invalid-feedback">
                                 </div>
-                            </div>
-                            <div class="col-sm-5 row">
-                                <input type="text" class="form-control" placeholder="Last Name" name="lastName" id="lastName" th:classappend="${#fields.hasErrors('lastName') ? 'is-invalid' : ''}" th:value="${loginData.lastName}">
-                                <div th:each=" e : ${#fields.errors( 'lastName')}" th:text="${e}" id="feedbackError" class="invalid-feedback">
+
+                                <input type="text" class="form-control" placeholder="Last Name" name="lastName" id="lastName" th:classappend="${#fields.hasErrors('lastName') ? 'is-invalid' : ''}" th:value="${signupData.lastName}">
+                                <div th:each=" e : ${#fields.errors('lastName')}" th:text="${e}" id="feedbackError" class="invalid-feedback">
                                 </div>
                             </div>
                         </div>
@@ -33,7 +32,7 @@
                                 <legend class="col-form-label col-sm-2 pt-0">Gender </legend>
                                 <div class="col-sm-10">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="male" value="M" checked>
+                                        <input class="form-check-input" type="radio" name="gender" id="male" value="M">
                                         <label class="form-check-label" for="male">
                                     male
                                   </label>
@@ -56,7 +55,7 @@
                         <div class="form-group row">
                             <label for="dateOfBirth" class="col-sm-2 col-form-label">Birthdate</label>
                             <div class="col-sm-10">
-                                <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth" th:classappend="${#fields.hasErrors('dateOfBirth') ? 'is-invalid' : ''}" th:value="${loginData.dateOfBirth}">
+                                <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth" th:classappend="${#fields.hasErrors('dateOfBirth') ? 'is-invalid' : ''}" th:value="${signupData.dateOfBirth}">
                                 <div th:each=" e : ${#fields.errors( 'dateOfBirth')}" th:text="${e}" id="feedbackError" class="invalid-feedback">
                                 </div>
                             </div>
@@ -64,7 +63,7 @@
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                             <div class="col-sm-10">
-                                <input type="email" class="form-control" name="email" id="inputEmail3" placeholder="username@domain.com" th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}" th:value="${loginData.email}">
+                                <input type="email" class="form-control" name="email" id="inputEmail3" placeholder="username@domain.com" th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}" th:value="${signupData.email}">
                                 <div th:each=" e : ${#fields.errors('email')}" th:text="${e}" id="feedbackError" class="invalid-feedback">
                                 </div>
                             </div>
@@ -72,7 +71,7 @@
                         <div class="form-group row">
                             <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
                             <div class="col-sm-10">
-                                <input type="password" class="form-control" name="password" id="inputPassword3" th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}" th:value="${loginData.password}">
+                                <input type="password" class="form-control" name="password" id="inputPassword3" th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}" th:value="${signupData.password}">
                                 <div th:each=" e : ${#fields.errors('password')}" th:text="${e}" id="feedbackError" class="invalid-feedback">
                                 </div>
                             </div>
@@ -89,6 +88,7 @@
                         <div class="form-group row">
                             <div class="container text-center">
                                 <button type="submit" class="btn btn-primary bg-primary">Submit</button>
+                                <button type="reset" class="btn btn-warning">Reset</button>
                             </div>
                         </div>
                     </form>

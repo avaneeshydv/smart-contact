@@ -2,11 +2,14 @@ package com.smart.contact.service;
 
 import java.time.LocalDate;
 
+import javax.validation.Valid;
+
 import com.smart.contact.config.ApplicationConstant;
 import com.smart.contact.dao.UserRepository;
 import com.smart.contact.entity.User;
 import com.smart.contact.vo.SignUpUser;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,18 +24,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(SignUpUser user) {
-        
+
         log.info("Creating user with details {}", user);
+        
         User userToBeAdded = new User();
         userToBeAdded.setFirstName(user.getFirstName());
         userToBeAdded.setLastName(user.getLastName());
         userToBeAdded.setGender(user.getGender().charAt(0));
         userToBeAdded.setEmail(user.getEmail());
         userToBeAdded.setPassword(user.getPassword());
-        userToBeAdded.setDateOfBirth(LocalDate.parse(user.getDateOfBirth()));
+
+        if (StringUtils.isNotBlank(user.getDateOfBirth())) {
+            userToBeAdded.setDateOfBirth(LocalDate.parse(user.getDateOfBirth()));
+        }
         userToBeAdded.setRole(ApplicationConstant.ADMIN);
-        
+
         return repository.save(userToBeAdded);
+    }
+
+    @Override
+    public User getUser(String email) {
+        return repository.findByEmail(email);
     }
 
 }

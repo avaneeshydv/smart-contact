@@ -1,7 +1,9 @@
 /Users/avayadav/eclipse-workspace/smart-contact/src/main/java/com/smart/contact/entity/Contact.java
+/Users/avayadav/eclipse-workspace/smart-contact/src/main/java/com/smart/contact/vo/SignUpUser.java
+/Users/avayadav/eclipse-workspace/smart-contact/src/main/java/com/smart/contact/controller/HomeController.java
+/Users/avayadav/eclipse-workspace/smart-contact/src/main/java/com/smart/contact/config/ApplicationConstant.java
 /Users/avayadav/eclipse-workspace/smart-contact/src/main/java/com/smart/contact/dao/UserRepository.java
 /Users/avayadav/eclipse-workspace/smart-contact/src/main/java/com/smart/contact/service/UserService.java
 /Users/avayadav/eclipse-workspace/smart-contact/src/main/java/com/smart/contact/service/UserServiceImpl.java
 /Users/avayadav/eclipse-workspace/smart-contact/src/main/java/com/smart/contact/SmartContactApplication.java
 /Users/avayadav/eclipse-workspace/smart-contact/src/main/java/com/smart/contact/entity/User.java
-/Users/avayadav/eclipse-workspace/smart-contact/src/main/java/com/smart/contact/controller/ApplicationController.java
