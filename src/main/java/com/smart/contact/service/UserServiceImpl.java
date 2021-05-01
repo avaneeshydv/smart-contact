@@ -9,6 +9,7 @@ import com.smart.contact.vo.SignUpUser;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository repository;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public User createUser(SignUpUser user) {
@@ -30,12 +33,13 @@ public class UserServiceImpl implements UserService {
         userToBeAdded.setLastName(user.getLastName());
         userToBeAdded.setGender(user.getGender().charAt(0));
         userToBeAdded.setEmail(StringUtils.lowerCase(user.getEmail()));
-        userToBeAdded.setPassword(user.getPassword());
-
+        userToBeAdded.setPassword(passwordEncoder.encode(user.getPassword()));
+        userToBeAdded.setEnabled(true);
+        userToBeAdded.setAbout(user.getDescription());
         if (StringUtils.isNotBlank(user.getDateOfBirth())) {
             userToBeAdded.setDateOfBirth(LocalDate.parse(user.getDateOfBirth()));
         }
-        userToBeAdded.setRole(ApplicationConstant.ADMIN);
+        userToBeAdded.setRole(ApplicationConstant.ROLE_USER);
 
         return repository.save(userToBeAdded);
     }
