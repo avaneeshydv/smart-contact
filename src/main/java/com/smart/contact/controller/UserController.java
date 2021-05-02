@@ -1,23 +1,40 @@
 package com.smart.contact.controller;
 
-import java.net.http.HttpRequest;
+import java.security.Principal;
 
-import javax.servlet.http.HttpServletRequest;
+import com.smart.contact.config.ApplicationConstant;
+import com.smart.contact.entity.User;
+import com.smart.contact.service.UserService;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 @RequestMapping("/user")
 public class UserController {
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping(value = "/index")
-    public String goToDashBoard() {
-        
-        return "user/dashboard";
+    public String goToDashBoard(Model model, Principal userProncipal) {
+
+        String name = userProncipal.getName();
+        log.info("Inside login page handler for {} ", name);
+
+        User user = userService.getUser(name);
+
+        model.addAttribute("user", user);
+
+        model.addAttribute("title", "User" + ApplicationConstant.APPLICATION_NAME);
+
+        return "/user/dashboard";
     }
 
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" th="https://www.thymeleaf.org" th:replace="user/base::layout(~{::section})">
 
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,9 @@
 </head>
 
 <body>
-    <h1>This is user dashboard</h1>
+    <section>
+        Name: <span th:text="${user.firstName + ' '+ user.lastName}"></span>
+    </section>
 </body>
 
 </html>
