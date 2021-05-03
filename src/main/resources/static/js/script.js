@@ -1,7 +1,6 @@
 console.log("This is javascript file")
 
-// code for side bar and button for small screen
-
+//code for side bar and button for small screen
 const toggleSidebar = () => {
 
     if ($('.sidebar').is(':visible')) {
