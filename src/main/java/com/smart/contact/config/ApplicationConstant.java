@@ -7,5 +7,6 @@ public interface ApplicationConstant {
     String ROLE_ADMIN = "ROLE_ADMIN";
     String USER = "USER";
     String ROLE_USER = "ROLE_ADMIN";
+    String PROFILE = "_profile";
 
 }

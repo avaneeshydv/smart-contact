@@ -13,14 +13,12 @@ import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Table(name = "CONTACT")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Contact {
 
     @Id
