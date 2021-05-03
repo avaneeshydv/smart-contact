@@ -11,6 +11,7 @@ import com.smart.contact.entity.User;
 import com.smart.contact.service.ContactService;
 import com.smart.contact.service.FileService;
 import com.smart.contact.service.UserService;
+import com.smart.contact.utils.FileUtils;
 import com.smart.contact.vo.ModelResponse;
 
 import org.apache.commons.lang3.StringUtils;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import ch.qos.logback.core.joran.conditional.ThenOrElseActionBase;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -66,31 +68,36 @@ public class UserController {
 
         try {
 
-            log.info("Contct data to be addded: {}", contact);
-
             if (result.hasErrors()) {
                 for (ObjectError element : result.getAllErrors()) {
                     log.error(element.getObjectName() + " " + element.getDefaultMessage());
                 }
-            }
-            // upload image with contact_id_profile name
-            String errorMessage = fileService.uploadFile(file, file.getOriginalFilename());
-            if (StringUtils.isNotBlank(errorMessage)) {
-                throw new Exception(errorMessage);
-            }
-            // set uri for image in contact
-            contact.setImageUrl(ServletUriComponentsBuilder.fromCurrentContextPath().path("/image/")
-                    .path(file.getOriginalFilename()).toUriString());
-
-            // adding contact into database
-            Contact cnt = contactService.addContact(contact);
-            if (cnt == null) {
-                log.error("Unable to add contact {}", contact.getName());
-                session.setAttribute("message", new ModelResponse("failed to add contact!!", "alert-danger"));
             } else {
-                log.error("Successfully added contact {}", contact.getName());
-                session.setAttribute("message",
-                        new ModelResponse("Successfully added contact " + contact.getName(), "alert-success"));
+                // upload image with contact_id_profile name
+                if (!file.isEmpty()) {
+
+                    String errorMessage = FileUtils.validateFile(file);
+
+                    if (StringUtils.isNotBlank(errorMessage)) {
+                        throw new Exception(errorMessage);
+                    }
+                    fileService.uploadFile(file, file.getOriginalFilename());
+                    // set uri for image in contact
+                    contact.setImageUrl(ServletUriComponentsBuilder.fromCurrentContextPath().path("/image/")
+                            .path(file.getOriginalFilename()).toUriString());
+                }
+
+                // adding contact into database
+                Contact cnt = contactService.addContact(contact);
+                if (cnt == null) {
+                    log.error("Unable to add contact {}", contact.getName());
+                    session.setAttribute("message", new ModelResponse("failed to add contact!!", "alert-danger"));
+                } else {
+                    log.error("Successfully added contact {}", contact.getName());
+                    session.setAttribute("message",
+                            new ModelResponse("Successfully added contact " + contact.getName(), "alert-success"));
+                    model.addAttribute("contact", new Contact());
+                }
             }
         } catch (Exception e) {
             log.error("Unable to add contact", e);

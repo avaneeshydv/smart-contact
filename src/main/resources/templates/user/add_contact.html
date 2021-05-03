@@ -13,6 +13,7 @@
             <div class="card-body">
                 <h2 class="text-center">Add Contact</h2>
                 <div class="container-fluid mt-1">
+                    <!--Alert message-->
                     <div th:if="${session.message}" th:classappend="${session.message.type}" class="text-center alert" role="alert">
                         <p th:text="${session.message.content}"></p>
                         <th:block th:text="${#session.removeAttribute('message')}"></th:block>
@@ -21,7 +22,7 @@
                         <div class="col-md-10 offset-md-1">
                             <form th:action="@{/user/do-add-contact}" th:object="${contact}" enctype="multipart/form-data" method="POST" class="mt-2">
 
-                                <!--First Name-->
+                                <!--Name-->
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
@@ -34,7 +35,7 @@
                                     </div>
                                 </div>
 
-                                <!--Last Name-->
+                                <!--nickname-->
                                 <div class="input-group mt-2">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
@@ -42,7 +43,7 @@
                                         </div>
                                     </div>
 
-                                    <input type="text" name="nickname" id="nickName" class="form-control" placeholder="Enter nickname">
+                                    <input type="text" name="nickname" id="nickName" class="form-control" placeholder="Enter nickname" th:value="${contact.nickname}">
 
                                 </div>
                                 <!--Phone number-->
@@ -53,11 +54,11 @@
                                         </div>
                                     </div>
 
-                                    <input type="text" name="phone" id="phone" class="form-control" placeholder="Enter phone number" th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}" th:value="${contact.name}">
+                                    <input type="text" name="phone" id="phone" class="form-control" placeholder="Enter phone number" th:classappend="${#fields.hasErrors('phone') ? 'is-invalid' : ''}" th:value="${contact.phone}">
                                     <div th:each="e : ${#fields.errors('phone')}" th:text="${e}" id="feedbackError" class="invalid-feedback">
                                     </div>
                                 </div>
-                                <!--Work phone number-->
+                                <!--Work/office-->
                                 <div class="input-group mt-2">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
@@ -65,7 +66,7 @@
                                         </div>
                                     </div>
 
-                                    <input type="text" name="work" id="work" class="form-control" placeholder="Enter work ">
+                                    <input type="text" name="work" id="work" class="form-control" placeholder="Enter work/office here" th:value="${contact.work}">
 
                                 </div>
 
@@ -77,7 +78,7 @@
                                         </div>
                                     </div>
 
-                                    <input type="text" name="email" id="email" class="form-control" placeholder="Enter Email" th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}" th:value="${contact.email}">
+                                    <input type="text" name="email" id="email" class="form-control" placeholder="Enter Email" th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}" th:value="${contact.email}">
                                     <div th:each="e : ${#fields.errors('email')}" th:text="${e}" id="feedbackError" class="invalid-feedback">
                                     </div>
 
@@ -91,7 +92,7 @@
                                             </div>
                                         </div>
 
-                                        <textarea type="text" name="address" id="address" rows="10" cols="30" class="form-control" placeholder="Enter your full address"></textarea>
+                                        <textarea type="text" name="address" id="address" rows="10" cols="30" class="form-control" placeholder="Enter your full address" th:text="${contact.address}"></textarea>
                                     </div>
                                     <div class="custom-file">
                                         <input type="file" name="profileImage" id="profileImage">

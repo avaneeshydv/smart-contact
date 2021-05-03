@@ -52,15 +52,15 @@ public class SignupController {
                 for (ObjectError element : result.getAllErrors()) {
                     log.error(element.getObjectName() + " " + element.getDefaultMessage());
                 }
+            } else {
+                User createdUser = userService.createUser(signupData);
+                log.info("Inside validation and process for signup handler.. payload {}", createdUser.toString());
+
+                session.setAttribute("message",
+                        new ModelResponse("Welcome " + createdUser.getFirstName(), "alert-success"));
+
+                model.addAttribute("signupData", new SignUpUser());
             }
-
-            User createdUser = userService.createUser(signupData);
-            log.info("Inside validation and process for signup handler.. payload {}", createdUser.toString());
-
-            session.setAttribute("message",
-                    new ModelResponse("Welcome " + createdUser.getFirstName(), "alert-success"));
-
-            model.addAttribute("signupData", new SignUpUser());
 
         } catch (Exception e) {
             log.error("Error occurred", "Something went wrong!!" + e.getMessage());

@@ -5,10 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 
-import com.smart.contact.utils.FileUtils;
-
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,26 +17,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FileServiceImpl implements FileService {
 
-    public String uploadFile(MultipartFile multipartFile, String fileName) {
+    public boolean uploadFile(MultipartFile multipartFile, String fileName) {
         try {
 
-            String errorMessage = FileUtils.validateFile(multipartFile);
+            StringBuilder path = new StringBuilder();
+            path.append(new ClassPathResource("static/image").getFile().getAbsolutePath()).append(File.separator)
+                    .append(LocalDateTime.now()).append(fileName);
 
-            if (StringUtils.isBlank(errorMessage)) {
-                StringBuilder path = new StringBuilder();
-                path.append(new ClassPathResource("static/image").getFile().getAbsolutePath()).append(File.separator)
-                        .append(fileName);
+            Files.copy(multipartFile.getInputStream(), Paths.get(path.toString()), StandardCopyOption.REPLACE_EXISTING);
+            return true;
 
-                Files.copy(multipartFile.getInputStream(), Paths.get(path.toString()),
-                        StandardCopyOption.REPLACE_EXISTING);
-                return "";
-            } else {
-                return errorMessage;
-            }
         } catch (IOException e) {
             log.error("Error occurred while uploading image  for contact id {}", fileName);
         }
-        return "Unable to upload";
+        return false;
     }
 
 }

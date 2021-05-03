@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,6 +32,7 @@ public class Contact {
     @Email(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", message = "Invalid Email Address!")
     private String email;
     @NotBlank(message = "Cannot have blank phone!!")
+    @Size(min = 10, max = 13, message = "Phone no should be b/w 10 to 13 chaacters!")
     private String phone;
     private String work;
     private String imageUrl;

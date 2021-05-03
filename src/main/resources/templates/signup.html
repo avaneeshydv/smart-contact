@@ -13,24 +13,28 @@
             <div class="row mt-2">
                 <div class="col-md-8 offset-md-2  bg-white">
                     <h2 class="text-center">Register Here!!</h2>
+                    <!--Alert message-->
                     <div th:if="${session.message}" th:classappend="${session.message.type}" class="text-center alert" role="alert">
                         <p th:text="${session.message.content}"></p>
                         <th:block th:text="${#session.removeAttribute('message')}"></th:block>
                     </div>
+                    <!--form-->
                     <form th:action="@{/signup_do}" method="POST" class="p-4" th:object="${signupData}">
                         <div class="form-group row">
-                            <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                            <!--First Name-->
+                            <label for="firstName" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10">
                                 <input type="text" name="firstName" class="form-control" placeholder="First Name" id="firstName" th:classappend="${#fields.hasErrors('firstName') ? 'is-invalid' : ''}" th:value="${signupData.firstName}">
 
                                 <div th:each="e : ${#fields.errors('firstName')}" th:text="${e}" id="feedbackError" class="invalid-feedback">
                                 </div>
-
+                                <!--Last Name-->
                                 <input type="text" class="form-control" placeholder="Last Name" name="lastName" id="lastName" th:classappend="${#fields.hasErrors('lastName') ? 'is-invalid' : ''}" th:value="${signupData.lastName}">
                                 <div th:each=" e : ${#fields.errors('lastName')}" th:text="${e}" id="feedbackError" class="invalid-feedback">
                                 </div>
                             </div>
                         </div>
+                        <!--Gender-->
                         <fieldset class="form-group">
                             <div class="row">
                                 <legend class="col-form-label col-sm-2 pt-0">Gender </legend>
@@ -56,6 +60,7 @@
                                 </div>
                             </div>
                         </fieldset>
+                        <!--Birth date-->
                         <div class="form-group row">
                             <label for="dateOfBirth" class="col-sm-2 col-form-label">Birthdate</label>
                             <div class="col-sm-10">
@@ -64,6 +69,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!--Email-->
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                             <div class="col-sm-10">
@@ -72,6 +78,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!--Password-->
                         <div class="form-group row">
                             <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
                             <div class="col-sm-10">
@@ -80,12 +87,14 @@
                                 </div>
                             </div>
                         </div>
+                        <!--About-->
                         <div class="form-group row">
                             <label for="description" class="col-sm-2 col-form-label">About</label>
                             <div class="col-sm-10">
                                 <textarea rows="6" class="form-control" name="description" id="description" placeholder="We would love to hear a bit about you..." th:text="${signupData.description}"></textarea>
                             </div>
                         </div>
+                        <!--T & C-->
                         <div class="form-group form-check text-center">
                             <input type="checkbox" name="agreement" id="agree" />
                             <label for="agree">Accept terms and conditions</label>

@@ -7,12 +7,15 @@ public class FileUtils {
 
     public static String validateFile(MultipartFile file) {
 
-        if (!(StringUtils.equalsIgnoreCase(file.getContentType(), "image/jpeg")
+        if (file.isEmpty()) {
+            // return "Empty file!!";
+            // here we are returning no error as we are allowing contact to be added without
+            // profile image
+            return "";
+        } else if (!(StringUtils.equalsIgnoreCase(file.getContentType(), "image/jpeg")
                 || StringUtils.equalsIgnoreCase(file.getContentType(), "image/jpg")
                 || StringUtils.equalsIgnoreCase(file.getContentType(), "image/png"))) {
             return "Unsupported file type!!";
-        } else if (file.isEmpty()) {
-            return "Empty file!!";
         } else {
             return "";
         }
