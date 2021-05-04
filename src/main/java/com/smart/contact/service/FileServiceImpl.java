@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.time.LocalDateTime;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class FileServiceImpl implements FileService {
 
             StringBuilder path = new StringBuilder();
             path.append(new ClassPathResource("static/image").getFile().getAbsolutePath()).append(File.separator)
-                    .append(LocalDateTime.now()).append(fileName);
+                    .append(fileName);
 
             Files.copy(multipartFile.getInputStream(), Paths.get(path.toString()), StandardCopyOption.REPLACE_EXISTING);
             return true;
