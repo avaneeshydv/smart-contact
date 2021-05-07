@@ -2,6 +2,7 @@ com/smart/contact/config/CustomUserServiceImpl.class
 com/smart/contact/dao/ContactRepository.class
 com/smart/contact/SmartContactApplication.class
 com/smart/contact/controller/SignupController.class
+com/smart/contact/controller/ContactController.class
 com/smart/contact/vo/ModelResponse.class
 com/smart/contact/service/ContactService.class
 com/smart/contact/entity/Contact.class

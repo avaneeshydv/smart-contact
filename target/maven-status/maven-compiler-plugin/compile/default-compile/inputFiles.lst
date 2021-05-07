@@ -1,5 +1,6 @@
 /Users/avayadav/eclipse-workspace/smart-contact/src/main/java/com/smart/contact/service/ContactServiceImpl.java
 /Users/avayadav/eclipse-workspace/smart-contact/src/main/java/com/smart/contact/config/CustomUserDetails.java
+/Users/avayadav/eclipse-workspace/smart-contact/src/main/java/com/smart/contact/controller/ContactController.java
 /Users/avayadav/eclipse-workspace/smart-contact/src/main/java/com/smart/contact/utils/FileUtils.java
 /Users/avayadav/eclipse-workspace/smart-contact/src/main/java/com/smart/contact/vo/LoginUser.java
 /Users/avayadav/eclipse-workspace/smart-contact/src/main/java/com/smart/contact/controller/UserController.java

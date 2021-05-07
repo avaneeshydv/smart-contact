@@ -14,3 +14,7 @@ const toggleSidebar = () => {
     }
 
 }
+
+function enable() {
+    document.getElementById("mySelect").disabled = false;
+}

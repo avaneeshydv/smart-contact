@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" th="https://www.thymeleaf.org" th:replace="user/base_user::layout(~{::section})">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <section>
+        <!--Alert message-->
+        <div th:if="${session.message}" th:classappend="${session.message.type}" class="text-center alert mr-3" role="alert">
+            <p th:text="${session.message.content}"></p>
+            <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+        </div>
+        <div th:each="contact , status : ${contacts}">
+            <div class="accordion mr-3 ml-3" id="accordionExample">
+                <div class="card">
+                    <div class="card-header bg-primary" id="headingOne">
+                        <h2>
+                            <button class="btn btn-link btn-block text-center" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <span th:text="${contact.name}+' ('+ ${contact.nickname}+')'" style="color: white; font-weight: bold;"></span>
+                      </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <form th:action="@{/user/do-update}" method="POST" th:object="${contact}">
+                            <div class="form-group mr-5">
+                                <img th:src="@{/image/{img}(img=${contact.imageUrl})}" alt="image" class="img-fluid float-right" style="width: 200px;height: 200;">
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <i class="fas fa-user col-form-label"></i>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" th:value="${contact.name}" readonly="true" ondblclick="this.readOnly='';" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <i class="fas fa-phone-square-alt col-form-label"></i>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" th:value="${contact.phone}" readonly="true" ondblclick="this.readOnly='';" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <i class="fas fa-envelope-open col-form-label"></i>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" th:value="${contact.email}" readonly="true" ondblclick="this.readOnly='';" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <i class="fas fa-briefcase col-form-label"></i>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" th:value="${contact.work}" readonly="true" ondblclick="this.readOnly='';" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <i class="fas fa-house-user col-form-label"></i>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" th:value="${contact.address}" readonly="true" ondblclick="this.readOnly='';" />
+                                    </div>
+                                </div>
+                                <div class="form-group  row">
+                                    <div class="col-sm-10 text-center">
+                                        <button type="submit" class="btn btn-primary bg-primary">Update</button>
+                                        <a th:href="@{/user/do-delete(contactId = ${contact.contactId})}" formmethod="GET" class="btn btn-danger">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

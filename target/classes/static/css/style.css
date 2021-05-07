@@ -52,6 +52,13 @@ body {
     .content {
         margin-left: 0% !important;
     }
+    .card-data {
+        color: gray;
+        font-weight: 500;
+        font-size: large;
+        padding: 2px;
+        width: 100% !important;
+    }
 }
 
 .sidebar {
@@ -95,4 +102,8 @@ body {
 
 .content {
     margin-left: 20%;
+}
+
+.card-body {
+    width: 75%;
 }

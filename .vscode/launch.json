@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - test",
+            "request": "launch",
+            "mainClass": "com.smart.contact.controller.test",
+            "projectName": "smart-contact"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-SmartContactApplication<smart-contact>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
