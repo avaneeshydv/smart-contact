@@ -1,7 +1,6 @@
 package com.smart.contact.controller;
 
 import java.security.Principal;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -17,12 +16,14 @@ import com.smart.contact.vo.ModelResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,7 +47,12 @@ public class ContactController {
     public String openAddContact(Model model) {
         model.addAttribute("title", "Add Contact" + ApplicationConstant.APPLICATION_NAME);
         model.addAttribute("contact", new Contact());
-        return "user/add_contact";
+        // add header
+        model.addAttribute("header", "Add Contact");
+        // add post url action
+        model.addAttribute("action", "/user/do-add-contact");
+
+        return "user/add_update_contact";
     }
 
     @PostMapping("/do-add-contact")
@@ -64,7 +70,7 @@ public class ContactController {
                     log.error(element.getObjectName() + " " + element.getDefaultMessage());
                 }
             } else {
-                // upload image with contact_id_profile name
+                // upload image with photo name
                 if (!file.isEmpty()) {
 
                     String errorMessage = FileUtils.validateFile(file);
@@ -75,6 +81,9 @@ public class ContactController {
                     fileService.uploadFile(file, file.getOriginalFilename());
                     // set name for image in contact
                     contact.setImageUrl(file.getOriginalFilename());
+                }else{
+                    // set default name for image in contact
+                    contact.setImageUrl("image.png");
                 }
 
                 // adding contact into database
@@ -95,22 +104,25 @@ public class ContactController {
                     new ModelResponse("failed to add contact!! " + e.getMessage(), "alert-danger"));
         }
 
-        return "user/add_contact";
+        return "user/add_update_contact";
 
     }
 
-    @GetMapping("/all-contact")
-    public String getAllContact(Model model) {
+    // number of page
+    // per page 5[n]
+    // current page 0[page]
+    @GetMapping("/all-contact/{page}")
+    public String getAllContact(Model model, @PathVariable("page") int currentpage) {
         model.addAttribute("title", "Get Contact" + ApplicationConstant.APPLICATION_NAME);
 
         User user = (User) model.getAttribute("user");
-        List<Contact> allContactForUser = contactService.getAllContactForUser(user.getUserId());
-        model.addAttribute("contacts", allContactForUser);
+
+        populAllContactWithPaginationForUser(user, model, currentpage);
 
         return "user/all_contact";
     }
 
-    @GetMapping("/do-delete")
+    @GetMapping("/delete")
     public String deleteContact(Model model, @RequestParam String contactId, HttpSession session) {
 
         try {
@@ -119,7 +131,11 @@ public class ContactController {
             if (user == null) {
                 throw new Exception("Something went wrong! Please login and retry!");
             }
+            // delete contact
             contactService.deleteContact(Integer.valueOf(contactId));
+            // get all contact into our model
+            populAllContactWithPaginationForUser(user, model, 0);
+
             session.setAttribute("message", new ModelResponse("Successfully removed Contact!! ", "alert-success"));
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -129,17 +145,51 @@ public class ContactController {
         return "user/all_contact";
     }
 
+    @GetMapping("/update")
+    public String handleUpdate(Model model, @RequestParam String contactId, HttpSession session) {
+
+        model.addAttribute("title", "Update Contact" + ApplicationConstant.APPLICATION_NAME);
+        try {
+            User user = (User) model.getAttribute("user");
+            log.info("contac id------{}", contactId);
+            if (user == null) {
+                throw new Exception("Something went wrong! Please login and retry!");
+            }
+            Contact contact = contactService.getContactByID(Integer.valueOf(contactId));
+            model.addAttribute("contact", contact);
+            // add header
+            model.addAttribute("header", "Update Contact");
+            // add post url action
+            model.addAttribute("action", "/user/do-update?contactId=" + contactId);
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            session.setAttribute("message",
+                    new ModelResponse("failed to update contact!! " + e.getMessage(), "alert-danger"));
+        }
+        return "user/add_update_contact";
+    }
+
     @PostMapping("/do-update")
-    public String updateContact(Model model, @ModelAttribute("contact") Contact contact, HttpSession session) {
+    public String updateContact(Model model, @ModelAttribute("contact") Contact contact, @RequestParam String contactId,
+            HttpSession session) {
 
         try {
             User user = (User) model.getAttribute("user");
             if (user == null) {
                 throw new Exception("Something went wrong! Please login and retry!");
             }
+            // set contact id coming in request param
+            contact.setContactId(Integer.parseInt(contactId));
+            // set user
+            contact.setUser(user);
+            // update
             Contact updatedContact = contactService.updateContact(contact);
+
             session.setAttribute("message",
-                    new ModelResponse("Successfully updated Contact!! " + updatedContact.getName(), "alert-success"));
+                    new ModelResponse("Successfully updated details for " + updatedContact.getName(), "alert-success"));
+            // populate updated user
+            populAllContactWithPaginationForUser(user, model, 0);
         } catch (Exception e) {
             log.error(e.getMessage());
             session.setAttribute("message",
@@ -159,6 +209,15 @@ public class ContactController {
         User user = userService.getUser(name);
 
         model.addAttribute("user", user);
+    }
+
+    private void populAllContactWithPaginationForUser(User user, Model model, int currentpage) {
+        Page<Contact> contacts = contactService.getAllContactForUser(user.getUserId(), currentpage, 5);
+
+        model.addAttribute("contacts", contacts);
+        model.addAttribute("currentPage", currentpage);
+        model.addAttribute("totalPages", contacts.getTotalPages());
+
     }
 
 }

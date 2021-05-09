@@ -1,17 +1,19 @@
 package com.smart.contact.service;
 
-import java.util.List;
-
 import com.smart.contact.entity.Contact;
+
+import org.springframework.data.domain.Page;
 
 public interface ContactService {
 
     Contact addContact(Contact contact);
 
-	List<Contact> getAllContactForUser(int userId);
+	Page<Contact> getAllContactForUser(int userId, int page, int size);
 
 	void deleteContact(int contactId);
 
 	Contact updateContact(Contact contact);
+
+	Contact getContactByID(int valueOf);
 
 }

@@ -1,11 +1,14 @@
 package com.smart.contact.service;
 
-import java.util.List;
+import javax.transaction.Transactional;
 
 import com.smart.contact.dao.ContactRepository;
 import com.smart.contact.entity.Contact;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,9 +23,10 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public List<Contact> getAllContactForUser(int userId) {
+    public Page<Contact> getAllContactForUser(int userId, int page, int size) {
 
-        return contactRepository.getContactsByUserId(userId);
+        Pageable pageRequest = PageRequest.of(page, size);
+        return contactRepository.getContactsByUserId(userId, pageRequest);
 
     }
 
@@ -32,12 +36,19 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
+    @Transactional
     public Contact updateContact(Contact contact) {
-        Contact oldContact = contactRepository.getOne(contact.getContactId());
-        
-        oldContact = contact;
+        // delete old contact
+        contactRepository.deleteById(contact.getContactId());
+        // insert new contact
+        return contactRepository.save(contact);
+    }
 
-        return contactRepository.save(oldContact);
+    @Override
+    public Contact getContactByID(int contactId) {
+
+        return contactRepository.findById(contactId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid contact Id: " + contactId));
     }
 
 }

@@ -11,7 +11,7 @@
     <section>
         <div class="card mr-3 ml-3">
             <div class="card-body">
-                <h2 class="text-center">Add Contact</h2>
+                <h2 class="text-center" th:text="${header}">Add Contact</h2>
                 <div class="container-fluid mt-1">
                     <!--Alert message-->
                     <div th:if="${session.message}" th:classappend="${session.message.type}" class="text-center alert" role="alert">
@@ -20,7 +20,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-10 offset-md-1">
-                            <form th:action="@{/user/do-add-contact}" th:object="${contact}" enctype="multipart/form-data" method="POST" class="mt-2">
+                            <form th:action="${action}" th:object="${contact}" enctype="multipart/form-data" method="POST" class="mt-2">
 
                                 <!--Name-->
                                 <div class="input-group">
