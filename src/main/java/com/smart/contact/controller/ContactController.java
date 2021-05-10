@@ -81,9 +81,9 @@ public class ContactController {
                     fileService.uploadFile(file, file.getOriginalFilename());
                     // set name for image in contact
                     contact.setImageUrl(file.getOriginalFilename());
-                }else{
+                } else {
                     // set default name for image in contact
-                    contact.setImageUrl("image.png");
+                    contact.setImageUrl(ApplicationConstant.DEFAULT_IMG);
                 }
 
                 // adding contact into database
@@ -172,7 +172,7 @@ public class ContactController {
 
     @PostMapping("/do-update")
     public String updateContact(Model model, @ModelAttribute("contact") Contact contact, @RequestParam String contactId,
-            HttpSession session) {
+            HttpSession session,  @RequestParam("profileImage") MultipartFile file) {
 
         try {
             User user = (User) model.getAttribute("user");
@@ -184,7 +184,7 @@ public class ContactController {
             // set user
             contact.setUser(user);
             // update
-            Contact updatedContact = contactService.updateContact(contact);
+            Contact updatedContact = contactService.updateContact(contact, file);
 
             session.setAttribute("message",
                     new ModelResponse("Successfully updated details for " + updatedContact.getName(), "alert-success"));

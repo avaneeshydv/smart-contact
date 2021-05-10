@@ -3,6 +3,7 @@ package com.smart.contact.service;
 import com.smart.contact.entity.Contact;
 
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ContactService {
 
@@ -12,7 +13,7 @@ public interface ContactService {
 
 	void deleteContact(int contactId);
 
-	Contact updateContact(Contact contact);
+	Contact updateContact(Contact contact, MultipartFile file);
 
 	Contact getContactByID(int valueOf);
 

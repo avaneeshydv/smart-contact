@@ -8,5 +8,6 @@ public interface ApplicationConstant {
     String USER = "USER";
     String ROLE_USER = "ROLE_USER";
     String PROFILE = "_profile";
+	String DEFAULT_IMG = "image.png";
 
 }

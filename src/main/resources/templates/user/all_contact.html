@@ -29,7 +29,7 @@
                     <tbody>
                         <tr th:each="contact : ${contacts}">
                             <td>
-                                <img class="contact_profile" th:src="'/image/'+${contact.imageUrl}" alt="profile Image">
+                                <img class="contact_profile" name="imageUrl" th:src="'/image/'+${contact.imageUrl}" alt="profile Image">
                                 <span th:text="${contact.name + ' ('+ contact.nickname} + ')' ">name</span>
                             </td>
                             <td th:text="${contact.email}">email</td>

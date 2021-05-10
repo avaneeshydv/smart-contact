@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ContactServiceImpl implements ContactService {
@@ -37,9 +38,17 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     @Transactional
-    public Contact updateContact(Contact contact) {
-        // delete old contact
-        contactRepository.deleteById(contact.getContactId());
+    public Contact updateContact(Contact contact, MultipartFile file) {
+        // get the exiting image if there is no update for image
+        // set user image
+        String image = contactRepository.getOne(contact.getContactId()).getImageUrl();
+        if(file.isEmpty()){
+            contact.setImageUrl(image);
+        }else{
+            contact.setImageUrl(file.getOriginalFilename());
+        }
+        
+
         // insert new contact
         return contactRepository.save(contact);
     }
