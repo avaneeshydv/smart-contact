@@ -31,5 +31,6 @@ public class SignUpUser {
     @Size(min = 8, max = 20, message = "password must be 8 to 20 characters long!")
     private String password;
     private String description;
+    private String imageUrl;
 
 }

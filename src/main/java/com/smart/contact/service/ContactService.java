@@ -11,7 +11,7 @@ public interface ContactService {
 
 	Page<Contact> getAllContactForUser(int userId, int page, int size);
 
-	void deleteContact(int contactId);
+	void deleteContact(int contactId, int userId);
 
 	Contact updateContact(Contact contact, MultipartFile file);
 

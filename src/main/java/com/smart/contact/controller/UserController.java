@@ -23,8 +23,19 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/index")
+    @GetMapping(value = "/profile")
     public String goToDashBoard(Model model, Principal userProncipal) {
+
+        User user = (User) model.getAttribute("user");
+
+        model.addAttribute("user", user);
+        model.addAttribute("title", user.getFirstName() + ApplicationConstant.APPLICATION_NAME);
+
+        return "/user/profile";
+    }
+
+    @GetMapping(value = "/index")
+    public String getProfile(Model model, Principal userProncipal) {
 
         model.addAttribute("title", "User" + ApplicationConstant.APPLICATION_NAME);
 

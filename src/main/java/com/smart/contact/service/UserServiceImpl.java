@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
         userToBeAdded.setEmail(StringUtils.lowerCase(user.getEmail()));
         userToBeAdded.setPassword(passwordEncoder.encode(user.getPassword()));
         userToBeAdded.setEnabled(true);
+        userToBeAdded.setImageUrl(user.getImageUrl());
         userToBeAdded.setAbout(user.getDescription());
         if (StringUtils.isNotBlank(user.getDateOfBirth())) {
             userToBeAdded.setDateOfBirth(LocalDate.parse(user.getDateOfBirth()));

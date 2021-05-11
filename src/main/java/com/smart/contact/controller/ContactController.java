@@ -122,19 +122,18 @@ public class ContactController {
         return "user/all_contact";
     }
 
-    @GetMapping("/delete")
-    public String deleteContact(Model model, @RequestParam String contactId, HttpSession session) {
-
+    @GetMapping("/delete/{contactId}")
+    public String deleteContact(Model model, @PathVariable("contactId") String contactId, HttpSession session) {
+        User user = (User) model.getAttribute("user");
         try {
-            User user = (User) model.getAttribute("user");
+
             log.info("contac id------{}", contactId);
             if (user == null) {
-                throw new Exception("Something went wrong! Please login and retry!");
+                throw new IllegalArgumentException("Something went wrong! Please login and retry!");
             }
-            // delete contact
-            contactService.deleteContact(Integer.valueOf(contactId));
-            // get all contact into our model
-            populAllContactWithPaginationForUser(user, model, 0);
+            //before deleting contact make sure to remove photo
+            //delete contact
+            contactService.deleteContact(Integer.valueOf(contactId), user.getUserId());
 
             session.setAttribute("message", new ModelResponse("Successfully removed Contact!! ", "alert-success"));
         } catch (Exception e) {
@@ -142,6 +141,9 @@ public class ContactController {
             session.setAttribute("message",
                     new ModelResponse("failed to delete contact!! " + e.getMessage(), "alert-danger"));
         }
+        // get all contact into our model
+        populAllContactWithPaginationForUser(user, model, 0);
+
         return "user/all_contact";
     }
 
@@ -172,10 +174,12 @@ public class ContactController {
 
     @PostMapping("/do-update")
     public String updateContact(Model model, @ModelAttribute("contact") Contact contact, @RequestParam String contactId,
-            HttpSession session,  @RequestParam("profileImage") MultipartFile file) {
+            HttpSession session, @RequestParam("profileImage") MultipartFile file) {
+
+        User user = (User) model.getAttribute("user");
 
         try {
-            User user = (User) model.getAttribute("user");
+
             if (user == null) {
                 throw new Exception("Something went wrong! Please login and retry!");
             }
@@ -183,19 +187,33 @@ public class ContactController {
             contact.setContactId(Integer.parseInt(contactId));
             // set user
             contact.setUser(user);
-            // update
+            //before updating contact make sure to remove photo
+            //update the contact
             Contact updatedContact = contactService.updateContact(contact, file);
 
             session.setAttribute("message",
                     new ModelResponse("Successfully updated details for " + updatedContact.getName(), "alert-success"));
-            // populate updated user
-            populAllContactWithPaginationForUser(user, model, 0);
+
         } catch (Exception e) {
             log.error(e.getMessage());
             session.setAttribute("message",
                     new ModelResponse("failed to update contact!! " + e.getMessage(), "alert-danger"));
         }
+        // populate updated user
+        populAllContactWithPaginationForUser(user, model, 0);
         return "user/all_contact";
+    }
+
+    @GetMapping("/{contactId}/contact")
+    public String getContactInfo(@PathVariable("contactId") int contactId, Model model) {
+
+        Contact contact = contactService.getContactByID(contactId);
+        model.addAttribute("title", contact.getName() + ApplicationConstant.APPLICATION_NAME);
+        User user = (User) model.getAttribute("user");
+        if (user.getUserId() == contact.getUser().getUserId()) {
+            model.addAttribute("contact", contact);
+        }
+        return "user/contact_info";
     }
 
     /**

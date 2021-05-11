@@ -15,7 +15,7 @@
             <th:block th:text="${#session.removeAttribute('message')}"></th:block>
         </div>
 
-        <div class="accordion mr-3 ml-3" style="background-color: white;">
+        <div class="card mr-3 ml-3" style="background-color: white;">
             <div class=" table-responsive ">
                 <table class="table table-hover ">
                     <thead class="bg-primary " style="color: white; ">
@@ -32,10 +32,10 @@
                                 <img class="contact_profile" name="imageUrl" th:src="'/image/'+${contact.imageUrl}" alt="profile Image">
                                 <span th:text="${contact.name + ' ('+ contact.nickname} + ')' ">name</span>
                             </td>
-                            <td th:text="${contact.email}">email</td>
+                            <td><a th:href="@{'/user/' + ${contact.contactId} + '/contact'}"><span th:text="${contact.email}"></span></a></td>
                             <td th:text="${contact.phone}">phone</td>
                             <td>
-                                <a th:href="@{/user/delete(contactId = ${contact.contactId})}"><i class="fas fa-trash-alt" style="color: black;"></i></a>
+                                <a href="#" th:onclick="|deleteContact(${contact.contactId})|"><i class="fas fa-trash-alt" style="color: black;"></i></a>
                                 <a th:href="@{/user/update(contactId = ${contact.contactId})}"><i class="far fa-edit ml-3" style="color: black;"></i></a>
                             </td>
                         </tr>

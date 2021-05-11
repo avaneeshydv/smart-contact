@@ -32,8 +32,13 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void deleteContact(int contactId) {
-        contactRepository.deleteById(contactId);
+    public void deleteContact(int contactId, int userId) {
+        Contact contact = contactRepository.getOne(contactId);
+        if (contact.getUser().getUserId() == userId) {
+            contactRepository.deleteById(contactId);
+        } else {
+            throw new IllegalArgumentException("Unauthorized to delete the contact!");
+        }
     }
 
     @Override
@@ -42,12 +47,11 @@ public class ContactServiceImpl implements ContactService {
         // get the exiting image if there is no update for image
         // set user image
         String image = contactRepository.getOne(contact.getContactId()).getImageUrl();
-        if(file.isEmpty()){
+        if (file.isEmpty()) {
             contact.setImageUrl(image);
-        }else{
+        } else {
             contact.setImageUrl(file.getOriginalFilename());
         }
-        
 
         // insert new contact
         return contactRepository.save(contact);

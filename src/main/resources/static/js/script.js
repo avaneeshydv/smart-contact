@@ -18,3 +18,20 @@ const toggleSidebar = () => {
 function enable() {
     document.getElementById("mySelect").disabled = false;
 }
+
+function deleteContact(contactId) {
+    swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to get the contact back!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                window.location = "/user/delete/" + contactId;
+            } else {
+                swal("Your contact is safe!");
+            }
+        });
+}
