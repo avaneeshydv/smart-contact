@@ -9,7 +9,73 @@
 
 <body>
     <section>
-        Name: <span th:text="${user.firstName + ' '+ user.lastName}"></span>
+        <div class="container">
+            <div class="row mr-3 mb-3 mt-2">
+                <div class="tile card col-sm ml-2">
+                    <div class="mt-4">
+                        <a th:href="@{/user/profile}">
+                            <i class="icon fas fa-user fa-8x mt-3"></i>
+                        </a>
+                    </div>
+                    <div class="mt-4">
+                        <h4>About Me</h4>
+                    </div>
+                </div>
+
+                <div class="tile card col-sm ml-2">
+                    <div class="mt-4">
+                        <a th:href="@{#}">
+                            <i class="icon far fa-envelope-open fa-8x mt-3"></i>
+                        </a>
+                    </div>
+                    <div class="mt-4">
+                        <h4>Send Mail</h4>
+                    </div>
+                </div>
+
+                <div class="tile card col-sm ml-2">
+                    <div class="mt-4">
+                        <a th:href="@{#}">
+                            <i class="icon fas fa-sms fa-8x mt-3"></i>
+                        </a>
+                    </div>
+                    <div class="mt-4">
+                        <h4>Send SMS</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row mr-3 mb-3 mt-2">
+                <div class="tile card col-sm ml-2">
+                    <div class="mt-4">
+                        <a th:href="@{/user/add-contact}">
+                            <i class="icon fas fa-user-plus fa-8x mt-3"></i>
+                        </a>
+                    </div>
+                    <div class="mt-4">
+                        <h4>Add New Contact</h4>
+                    </div>
+                </div>
+
+                <div class="tile card col-sm ml-2">
+                    <div class="mt-4">
+                        <a th:href="@{/user/all-contact/0}">
+                            <i class="icon far fa-address-book fa-8x mt-3"></i>
+                        </a>
+                    </div>
+                    <div class="mt-4">
+                        <h4>Contact List</h4>
+                    </div>
+                </div>
+                <div class="tile card col-sm ml-2">
+                    <div class="mt-4">
+                        <i class="icon fas fa-cogs fa-8x mt-3"></i>
+                    </div>
+                    <div class="mt-4">
+                        <h4>Settings</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </body>
 

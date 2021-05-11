@@ -136,3 +136,14 @@ body {
     background-color: #009688 !important;
     border: solid 1px #009688 !important;
 }
+
+.tile {
+    background-color: azure;
+    font-size: large;
+    text-align: center;
+    cursor: pointer;
+}
+
+.icon {
+    color: #40aae3;
+}

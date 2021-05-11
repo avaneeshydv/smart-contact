@@ -1,7 +1,5 @@
 package com.smart.contact.service;
 
-import javax.transaction.Transactional;
-
 import com.smart.contact.dao.ContactRepository;
 import com.smart.contact.entity.Contact;
 
@@ -42,7 +40,6 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    @Transactional
     public Contact updateContact(Contact contact, MultipartFile file) {
         // get the exiting image if there is no update for image
         // set user image
