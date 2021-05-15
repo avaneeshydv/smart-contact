@@ -1,5 +1,7 @@
 package com.smart.contact.service;
 
+import java.util.List;
+
 import com.smart.contact.dao.ContactRepository;
 import com.smart.contact.entity.Contact;
 
@@ -59,6 +61,11 @@ public class ContactServiceImpl implements ContactService {
 
         return contactRepository.findById(contactId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid contact Id: " + contactId));
+    }
+
+    @Override
+    public List<Contact> getAllContactForUser(int userId) {
+        return contactRepository.getAllContactsForUser(userId);
     }
 
 }

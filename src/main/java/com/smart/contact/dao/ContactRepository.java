@@ -1,5 +1,6 @@
 package com.smart.contact.dao;
 
+import java.util.List;
 
 import com.smart.contact.entity.Contact;
 
@@ -13,5 +14,8 @@ public interface ContactRepository extends JpaRepository<Contact, Integer> {
 
     @Query("from Contact as c where c.user.userId =:userId")
     Page<Contact> getContactsByUserId(@Param("userId") int userId, Pageable pageable);
+
+    @Query("from Contact as c where c.user.userId =:userId")
+    List<Contact> getAllContactsForUser(@Param("userId") int userId);
 
 }

@@ -112,6 +112,9 @@ body {
     border: 1px solid black;
 }
 
+
+/*pagination style*/
+
 .pagination>li>a {
     background-color: white;
     color: black;
@@ -137,6 +140,9 @@ body {
     border: solid 1px #009688 !important;
 }
 
+
+/*home page tiles and icons inside*/
+
 .tile {
     background-color: azure;
     font-size: large;
@@ -145,5 +151,5 @@ body {
 }
 
 .icon {
-    color: #40aae3;
+    color: #03b6a4;
 }

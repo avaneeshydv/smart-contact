@@ -1,5 +1,7 @@
 package com.smart.contact.service;
 
+import java.util.List;
+
 import com.smart.contact.entity.Contact;
 
 import org.springframework.data.domain.Page;
@@ -16,5 +18,7 @@ public interface ContactService {
 	Contact updateContact(Contact contact, MultipartFile file);
 
 	Contact getContactByID(int valueOf);
+
+	List<Contact> getAllContactForUser(int userId);
 
 }
